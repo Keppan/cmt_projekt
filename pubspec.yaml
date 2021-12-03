@@ -44,6 +44,10 @@ dependencies:
   permission_handler:
   camera:
   video_player:
+  #rtmp_publisher: 0.3.7
+  #ext_video_player: 0.0.6
+  wakelock:
+  video_stream: 0.0.1
 
 dev_dependencies:
   flutter_test:

@@ -45,6 +45,7 @@ dependencies:
   shared_preferences:
   google_fonts:
   gradient_ui_widgets: ^1.0.2-nullsafety
+  just_audio: ^0.9.15
 
 dev_dependencies:
   flutter_test:

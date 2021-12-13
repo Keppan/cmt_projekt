@@ -3,6 +3,7 @@ const String home = '/Home';
 const String createAccount = '/CreateAccount';
 const String demo = '/Demo';
 const String appChannel = '/AppChannel';
+const String webChannel = '/WebChannel';
 const String login = '/login';
 const String appMenu = '/AppMenu';
 const String appWelcome = '/AppWelcome';

@@ -217,6 +217,9 @@ class WebLoginPage extends StatelessWidget {
                                     onTap: () {
                                       context
                                           .read<LoginPageViewModel>()
+                                          .guestSign(context);
+                                      context
+                                          .read<LoginPageViewModel>()
                                           .changePage(context, constant.home);
                                     },
                                     child: const Text(

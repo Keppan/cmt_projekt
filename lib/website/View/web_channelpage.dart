@@ -5,13 +5,16 @@ import 'package:provider/src/provider.dart';
 class WebChannelPage extends StatefulWidget {
   @override
   _WebChannelPageState createState() => _WebChannelPageState();
+  _WebChannelPlayerState createPlayState() => _WebChannelPlayerState();
 }
 
 class _WebChannelPageState extends State<WebChannelPage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: context.read<StreamViewModel>().closeClient,
+      onWillPop: context
+          .read<StreamViewModel>()
+          .closeClient,
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(80.0),
@@ -27,22 +30,22 @@ class _WebChannelPageState extends State<WebChannelPage> {
                       begin: Alignment.centerLeft,
                       end: Alignment.centerRight,
                       colors: [
-                    Colors.black,
-                    Colors.blueAccent,
-                  ])),
+                        Colors.black,
+                        Colors.blueAccent,
+                      ])),
             ),
           ),
         ),
         body: Container(
           decoration: const BoxDecoration(
               gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Colors.black,
-              Colors.blueAccent,
-            ],
-          )),
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.black,
+                  Colors.blueAccent,
+                ],
+              )),
           child: Column(
             children: [
               Container(
@@ -59,7 +62,11 @@ class _WebChannelPageState extends State<WebChannelPage> {
                   ),
                 ),
                 child: Text(
-                    context.watch<StreamViewModel>().smodel.recorder!.isRecording
+                    context
+                        .watch<StreamViewModel>()
+                        .smodel
+                        .recorder!
+                        .isRecording
                         ? 'Playback to your headset!'
                         : 'Recorder is stopped'),
               ),
@@ -68,7 +75,11 @@ class _WebChannelPageState extends State<WebChannelPage> {
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(
-              context.watch<StreamViewModel>().smodel.recorder!.isRecording
+              context
+                  .watch<StreamViewModel>()
+                  .smodel
+                  .recorder!
+                  .isRecording
                   ? Icons.mic
                   : Icons.mic_off),
           onPressed: () {
@@ -76,6 +87,61 @@ class _WebChannelPageState extends State<WebChannelPage> {
           },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      ),
+    );
+  }
+}
+
+class _WebChannelPlayerState extends State<_WebChannelPlayerState> {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            children: [
+              const Spacer(),
+              ValueListenableBuilder<ProgressBarState>(
+                valueListenable: _pageManager.progressNotifier,
+                builder: (_, value, __) {
+                  return ProgressBar(
+                    progress: value.current,
+                    buffered: value.buffered,
+                    total: value.total,
+                    onSeek: _pageManager.seek,
+                  );
+                },
+              ),
+              ValueListenableBuilder<ButtonState>(
+                valueListenable: _pageManager.buttonNotifier,
+                builder: (_, value, __) {
+                  switch (value) {
+                    case ButtonState.loading:
+                      return Container(
+                        margin: const EdgeInsets.all(8.0),
+                        width: 32.0,
+                        height: 32.0,
+                        child: const CircularProgressIndicator(),
+                      );
+                    case ButtonState.paused:
+                      return IconButton(
+                        icon: const Icon(Icons.play_arrow),
+                        iconSize: 32.0,
+                        onPressed: _pageManager.play,
+                      );
+                    case ButtonState.playing:
+                      return IconButton(
+                        icon: const Icon(Icons.pause),
+                        iconSize: 32.0,
+                        onPressed: _pageManager.pause,
+                      );
+                  }
+                },
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

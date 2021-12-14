@@ -8,7 +8,11 @@ import 'package:flutter/material.dart';
 class HomePageViewModel with ChangeNotifier {
   ///Returnerar användarens email.
   String? getEmail() {
-    return Prefs().storedData.getString("email");
+    if (Prefs().storedData.get("email").toString() == "null") {
+      return "Gäst";
+    } else {
+      return Prefs().storedData.get("email").toString();
+    }
   }
 
   ///Returnerar användarens uID.

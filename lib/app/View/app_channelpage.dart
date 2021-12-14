@@ -59,7 +59,7 @@ class _AppChannelPageState extends State<AppChannelPage> {
                   ),
                 ),
                 child: Text(
-                    context.watch<StreamViewModel>().smodel.recorder!.isRecording
+                    context.watch<StreamViewModel>().sModel.recorder!.isRecording
                         ? 'Playback to your headset!'
                         : 'Recorder is stopped'),
               ),
@@ -68,7 +68,7 @@ class _AppChannelPageState extends State<AppChannelPage> {
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(
-              context.watch<StreamViewModel>().smodel.recorder!.isRecording
+              context.watch<StreamViewModel>().sModel.recorder!.isRecording
                   ? Icons.mic
                   : Icons.mic_off),
           onPressed: () {

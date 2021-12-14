@@ -5,6 +5,7 @@ import 'package:cmt_projekt/api/prefs.dart';
 import 'package:cmt_projekt/model/streammessage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:flutter_sound_lite/public/flutter_sound_player.dart';
 
@@ -13,7 +14,13 @@ import '../constants.dart';
 class Client {
   late WebSocketChannel client;
   late FlutterSoundPlayer? _player;
+  late AudioPlayer? _audioPlayer;
+
   StreamController<Food>? foodStreamController = StreamController<Food>.broadcast();
+
+  Client.fromClient(AudioPlayer? audioPlayer){
+
+  }
 
   Client(FlutterSoundPlayer? player) {
     _player = player;
